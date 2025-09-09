@@ -7,6 +7,7 @@ import {
   MessageSquare,
   Settings,
   Clock,
+  Home,
 } from "lucide-react";
 
 import {
@@ -22,6 +23,7 @@ import {
 } from "@/components/ui/sidebar";
 
 const navigationItems = [
+  { title: "Home", url: "/", icon: Home },
   { title: "Customer Portal", url: "/customer", icon: MessageSquare },
   { title: "Admin Dashboard", url: "/admin", icon: Calendar },
   { title: "Kitchen View", url: "/kitchen", icon: ChefHat },
@@ -52,9 +54,11 @@ export function AppSidebar() {
     <Sidebar className={state === "collapsed" ? "w-16" : "w-64"} collapsible="icon">
       <SidebarContent className="bg-gradient-subtle">
         <div className="p-4 border-b">
-          <h2 className={`font-bold text-lg text-primary ${state === "collapsed" ? "text-center" : ""}`}>
-            {state === "collapsed" ? "🍽️" : "🍽️ RestaurantPro"}
-          </h2>
+          <NavLink to="/" className="block">
+            <h2 className={`font-bold text-lg text-primary ${state === "collapsed" ? "text-center" : ""}`}>
+              {state === "collapsed" ? "🍽️" : "🍽️ RestaurantPro"}
+            </h2>
+          </NavLink>
         </div>
 
         <SidebarGroup>

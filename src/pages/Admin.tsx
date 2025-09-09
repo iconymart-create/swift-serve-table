@@ -54,13 +54,20 @@ const mockReservations = [
   }
 ];
 
-const mockTables = Array.from({length: 20}, (_, i) => ({
-  number: i + 1,
-  capacity: Math.floor(Math.random() * 6) + 2,
-  status: i < 8 ? "occupied" : "available",
-  customer: i < 8 ? mockReservations[i % 4]?.name : null,
-  arrivalTime: i < 8 ? mockReservations[i % 4]?.arrivalTime : null
-}));
+  const mockTables = Array.from({length: 20}, (_, i) => {
+    const isOccupied = i < 8;
+    const associatedReservation = isOccupied ? mockReservations[i % 4] : null;
+    
+    return {
+      id: i + 1,
+      number: i + 1,
+      capacity: Math.floor(Math.random() * 6) + 2,
+      status: associatedReservation?.status === "completed" ? "available" : (isOccupied ? "occupied" : "available"),
+      customer: associatedReservation && associatedReservation.status !== "completed" ? associatedReservation.name : null,
+      arrivalTime: associatedReservation && associatedReservation.status !== "completed" ? associatedReservation.arrivalTime : null,
+      reservationStatus: associatedReservation && associatedReservation.status !== "completed" ? associatedReservation.status : null
+    };
+  });
 
 export default function Admin() {
   const [reservations, setReservations] = useState(mockReservations);
